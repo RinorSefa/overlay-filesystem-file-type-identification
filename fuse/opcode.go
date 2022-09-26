@@ -372,10 +372,12 @@ func doRead(server *Server, req *request) {
 	buf := server.allocOut(req, in.Size)
 
 	req.readResult, req.status = server.fileSystem.Read(req.cancel, in, buf)
-	if fd, ok := req.readResult.(*readResultFd); ok {
-		req.fdData = fd
-		req.flatData = nil
-	} else if req.readResult != nil && req.status.Ok() {
+	// Below code uses zero copy, so kernal reads directly from the data storage bypassing filesystem.
+	//if fd, ok := req.readResult.(*readResultFd); ok {
+	//	req.fdData = fd
+	//	req.flatData = nil
+	//} else
+	if req.readResult != nil && req.status.Ok() {
 		req.flatData, req.status = req.readResult.Bytes(buf)
 	}
 }
