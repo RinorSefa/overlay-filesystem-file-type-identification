@@ -190,6 +190,8 @@ func (n *LoopbackNode) Unlink(ctx context.Context, name string) syscall.Errno {
 }
 
 func (n *LoopbackNode) Rename(ctx context.Context, name string, newParent InodeEmbedder, newName string, flags uint32) syscall.Errno {
+	newName = newName[:len(newName)-len(filepath.Ext(newName))]
+	//&bitwise AND
 	if flags&RENAME_EXCHANGE != 0 {
 		return n.renameExchange(name, newParent, newName)
 	}
@@ -204,6 +206,7 @@ func (n *LoopbackNode) Rename(ctx context.Context, name string, newParent InodeE
 var _ = (NodeCreater)((*LoopbackNode)(nil))
 
 func (n *LoopbackNode) Create(ctx context.Context, name string, flags uint32, mode uint32, out *fuse.EntryOut) (inode *Inode, fh FileHandle, fuseFlags uint32, errno syscall.Errno) {
+	name = name[:len(name)-len(filepath.Ext(name))]
 	p := filepath.Join(n.path(), name)
 	flags = flags &^ syscall.O_APPEND
 	fd, err := syscall.Open(p, int(flags)|os.O_CREATE, mode)
@@ -280,6 +283,7 @@ func (n *LoopbackNode) Readlink(ctx context.Context) ([]byte, syscall.Errno) {
 }
 
 func (n *LoopbackNode) Open(ctx context.Context, flags uint32) (fh FileHandle, fuseFlags uint32, errno syscall.Errno) {
+	//&^ Bitclear (AND NOT)
 	flags = flags &^ syscall.O_APPEND
 	p := n.path()
 	f, err := syscall.Open(p, int(flags), 0)
