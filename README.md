@@ -9,7 +9,7 @@ Tested environment requirement
 Navigate to the filesystem application for the file type and start the application.
 
 ```
-$ cd cmd/file-type/filesystem
+$ cd cmd/file-type-filesystem
 $ go run main.go
 ```
 
