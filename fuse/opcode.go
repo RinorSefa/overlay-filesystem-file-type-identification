@@ -367,6 +367,7 @@ func doLink(server *Server, req *request) {
 	req.status = server.fileSystem.Link(req.cancel, (*LinkIn)(req.inData), req.filenames[0], out)
 }
 
+// Modified by @RinorSefa
 func doRead(server *Server, req *request) {
 	in := (*ReadIn)(req.inData)
 	buf := server.allocOut(req, in.Size)

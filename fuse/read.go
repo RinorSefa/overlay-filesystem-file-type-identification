@@ -49,6 +49,7 @@ type readResultFd struct {
 	Sz int
 }
 
+// Author @RinorSefa
 // mimetype/supported_mimes.md
 // according to paper CryptoLock Scaife 2016 frequency of file extension accessed by 492 ransomware samples
 // pdf / "application/pdf" / offset 0 (according to https://github.com/file/file/blob/master/magic/Magdir/pdf)
@@ -79,6 +80,7 @@ var typesList = [12]string{
 	"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
 }
 
+// Modified by @RinorSefa
 // Reads raw bytes from file descriptor if necessary, using the passed
 // buffer as storage.
 func (r *readResultFd) Bytes(buf []byte) ([]byte, Status) {

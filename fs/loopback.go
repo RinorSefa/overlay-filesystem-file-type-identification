@@ -189,6 +189,7 @@ func (n *LoopbackNode) Unlink(ctx context.Context, name string) syscall.Errno {
 	return ToErrno(err)
 }
 
+// Modified by @RinorSefa
 func (n *LoopbackNode) Rename(ctx context.Context, name string, newParent InodeEmbedder, newName string, flags uint32) syscall.Errno {
 	newName = newName[:len(newName)-len(filepath.Ext(newName))]
 	//&bitwise AND
@@ -205,6 +206,7 @@ func (n *LoopbackNode) Rename(ctx context.Context, name string, newParent InodeE
 
 var _ = (NodeCreater)((*LoopbackNode)(nil))
 
+// Modified by @RinorSefa
 func (n *LoopbackNode) Create(ctx context.Context, name string, flags uint32, mode uint32, out *fuse.EntryOut) (inode *Inode, fh FileHandle, fuseFlags uint32, errno syscall.Errno) {
 	name = name[:len(name)-len(filepath.Ext(name))]
 	p := filepath.Join(n.path(), name)
