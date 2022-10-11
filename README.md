@@ -19,3 +19,8 @@ $ go run main.go
 - fs/loopback.go (modified rename and create method)
 - fuse/opcode.go (modified doRead method)
 - fuse/read.go (modified Bytes method)
+
+To unmount the file system
+```
+$ cd fusermount -u mountPath
+```
